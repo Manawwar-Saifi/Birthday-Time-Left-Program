@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kannu Paliwal</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow: hidden;
+        height: 100vh;
+        width: 100%;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        scale: 0.75;
+        .img-div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img {
+            width: 30%;
+            border-radius: 50rem;
+            border: 5px solid pink;
+            box-shadow: 0px 0px 10px 0px tomato;
+          }
+        }
+      }
+
+      h1 {
+        text-align: center;
+        color: #667eea;
+        margin-bottom: 20px;
+        font-size: 2em;
+      }
+
+      .birthday-info {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        color: white;
+      }
+
+      .birthday-info .date {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .birthday-info .subtitle {
+        font-size: 1.1em;
+        opacity: 0.9;
+      }
+
+      .time-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .time-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+      }
+
+      .time-box:hover {
+        transform: translateY(-5px);
+      }
+
+      .time-value {
+        font-size: 3em;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .time-label {
+        font-size: 1em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        opacity: 0.9;
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 1.2em;
+        color: #333;
+        font-weight: 600;
+        padding: 15px;
+        background: rgba(102, 126, 234, 0.1);
+        border-radius: 10px;
+      }
+
+      .celebration {
+        text-align: center;
+        font-size: 2.5em;
+        color: #667eea;
+        margin: 30px 0;
+        animation: bounce 1s infinite;
+      }
+
+      .celebration-message {
+        text-align: center;
+        font-size: 1.5em;
+        color: #764ba2;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .birthday-today {
+        animation: pulse 2s infinite;
+      }
+
+      @media (max-width: 720px) {
+        .container {
+          scale: 0.95;
+          padding: 10px;
+          h1 {
+            font-size: 18px;
+          }
+          .message {
+            font-size: 16px;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="img-div">
+        <img src="./Yashika-Paliwal.jpg" alt="Yashika Paliwal" />
+      </div>
+
+      <h1>🎂 Birthday is Comming Soon</h1>
+
+      <div class="birthday-info">
+        <div class="date">December 28, 2025</div>
+        <div class="subtitle">Sunday | Special Birthday 🎉</div>
+      </div>
+
+      <div id="countdown">
+        <div class="time-grid">
+          <div class="time-box">
+            <span class="time-value" id="days">0</span>
+            <span class="time-label">Days</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="hours">0</span>
+            <span class="time-label">Hours</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="minutes">0</span>
+            <span class="time-label">Minutes</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="seconds">0</span>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+        <div class="message" id="message"></div>
+      </div>
+    </div>
+
+    <script>
+      // Set the target birthday date - December 28, 2025 at midnight
+      const targetDate = new Date("2025-12-28T00:00:00");
+
+      function updateCountdown() {
+        const now = new Date();
+        const difference = targetDate - now;
+
+        // Check if birthday has arrived or passed
+        if (difference <= 0) {
+          showCelebration();
+          return;
+        }
+
+        // Calculate time remaining
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Update the display
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+
+        // Update message based on time remaining
+        const messageEl = document.getElementById("message");
+        if (days === 0 && hours === 0 && minutes < 30) {
+          messageEl.textContent = "🎉 Almost time! Just moments away!";
+        } else if (days === 0 && hours === 0) {
+          messageEl.textContent = "🎊 Less than an hour to go!";
+        } else if (days === 0) {
+          messageEl.textContent =
+            "🎈 It's TODAY! Birthday is coming in a few hours!";
+        } else if (days === 1) {
+          messageEl.textContent = "🎁 Tomorrow is the big day!";
+        } else if (days <= 7) {
+          messageEl.textContent = "🌟 Less than a week away!";
+        } else if (days <= 14) {
+          messageEl.textContent = "⭐ Two weeks or less to go!";
+        } else {
+          messageEl.textContent = `⏳ Counting down to the special day...`;
+        }
+      }
+
+      function showCelebration() {
+        const countdown = document.getElementById("countdown");
+        countdown.innerHTML = `
+                <div class="celebration birthday-today">
+                    🎉🎂🎈🎊🎁
+                </div>
+                <div class="celebration-message">
+                    HAPPY BIRTHDAY!
+                </div>
+                <div class="message" style="font-size: 1.3em; margin-top: 20px;">
+                    Wishing you a day filled with joy, love, and wonderful memories!<br>
+                    May all your dreams come true! 🌟
+                </div>
+            `;
+      }
+
+      // Start the countdown immediately
+      updateCountdown();
+
+      // Update every second
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
