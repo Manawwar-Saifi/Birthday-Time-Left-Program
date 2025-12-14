@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kannu Paliwal</title>
+    <title>Kannu Paliwal Birthday Countdown</title>
     <style>
       * {
         margin: 0;
@@ -23,7 +23,7 @@
         width: 100%;
       }
 
-      .container {
+      .container {  
         background: rgba(255, 255, 255, 0.95);
         padding: 40px;
         border-radius: 20px;
@@ -175,14 +175,14 @@
   <body>
     <div class="container">
       <div class="img-div">
-        <img src="./Yashika-Paliwal.jpg" alt="Yashika Paliwal" />
+        <img src="Yashika-Paliwal.jpg" alt="Kannu Paliwal" />
       </div>
 
-      <h1>🎂Kannu's Birthday is Coming Soon </h1>
+      <h1>🎂 Kannu's Birthday is Coming Soon</h1>
 
       <div class="birthday-info">
         <div class="date">December 28, 2025</div>
-        <div class="subtitle">Sunday | Special Birthday 🎉</div>
+        <div class="subtitle">Saturday | Special Birthday 🎉</div>
       </div>
 
       <div id="countdown">
@@ -211,6 +211,7 @@
     <script>
       // Set the target birthday date - December 28, 2025 at midnight
       const targetDate = new Date("2025-12-28T00:00:00");
+      let hasOpened = false;
 
       function updateCountdown() {
         const now = new Date();
@@ -254,8 +255,25 @@
         } else if (days <= 14) {
           messageEl.textContent = "⭐ Two weeks or less to go!";
         } else {
-          messageEl.textContent = `⏳ Counting down to the special day...`;
+          messageEl.textContent = "⏳ Counting down to the special day...";
         }
+      }
+
+      function openWhatsApp() {
+        const phoneNumber = "917988062239"; // country code + number (no + or spaces)
+        // Birthday message from Manawwar
+        const message = encodeURIComponent(`🎉🎂 Happy Birthday Kannu! 🎂🎉
+
+Wishing you a day filled with joy, love, and wonderful memories! May this special day bring you happiness and all your dreams come true! 🌟✨
+
+Have an amazing birthday celebration! 🎈🎁
+
+With love,
+Manawwar 💝`);
+
+        // Open WhatsApp with the message
+        // For web WhatsApp (works on desktop and mobile browsers)
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
       }
 
       function showCelebration() {
@@ -265,13 +283,27 @@
                     🎉🎂🎈🎊🎁
                 </div>
                 <div class="celebration-message">
-                    HAPPY BIRTHDAY!
+                    HAPPY BIRTHDAY KANNU!
                 </div>
                 <div class="message" style="font-size: 1.3em; margin-top: 20px;">
                     Wishing you a day filled with joy, love, and wonderful memories!<br>
                     May all your dreams come true! 🌟
                 </div>
+                <div style="text-align: center;">
+                    <a href="#" class="whatsapp-btn" onclick="openWhatsApp(); return false;">
+                        <span class="whatsapp-icon">💬</span>
+                        Send Birthday Wish on WhatsApp
+                    </a>
+                </div>
             `;
+
+        // Automatically open WhatsApp once when countdown completes
+        if (!hasOpened) {
+          hasOpened = true;
+          setTimeout(() => {
+            openWhatsApp();
+          }, 2000); // Wait 2 seconds to show celebration first
+        }
       }
 
       // Start the countdown immediately
